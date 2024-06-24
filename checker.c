@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
+//split complete function into smaller functions to reduce complexity
 int checkTemp(float temperature)
 {
   if(temperature < 0 || temperature > 45) 
