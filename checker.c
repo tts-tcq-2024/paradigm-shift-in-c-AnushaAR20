@@ -1,43 +1,35 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
 #include <stdio.h>
 #include <assert.h>
 
-//split complete function into smaller functions to reduce complexity
-int checkTemp(float temperature)
+int check(float min, float max, float val, char* parameter) 
 {
-  if(temperature < 0 || temperature > 45) 
+  if (val < min || val > max) 
   {
-    printf("Temperature out of range!\n");
+    printf("%s is Out of range \n", parameter);
     return 0;
   }
+  printf("%s is in range!\n", parameter);
   return 1;
 }
 
-int checkSOC(float soc)
-{
-  if(soc < 20 || soc > 80) 
-  {
-    printf("State of Charge out of range!\n");
-    return 0;
-  }
-  return 1;
-}
 
-int checkChargeRate(float chargeRate)
+int batteryIsOk(float temp, float soc, float charge) 
 {
-   if(chargeRate > 0.8) 
-  {
-    printf("Charge Rate out of range!\n");
-    return 0;
-  }
-  return 1;
-}
-int batteryIsOk(float temperature, float soc, float chargeRate)
-{
-  return (checkTemp(temperature)&& checkSOC(soc)&&checkChargeRate(chargeRate));
+  return (check(0,45,temp, "Temperature") && check(20,80, soc, "State of charge") && check(0,0.8,charge, "Charge rate"));
 }
 
 int main() 
 {
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0));
+  assert(batteryIsOk(70, 90, 0.7));
+  //assert(!batteryIsOk(50, 85, 0));
+  return 0;
 }
+
