@@ -20,7 +20,7 @@ int battery_is_ok(float temperature, float soc, float charge_rate)
 
 int main() 
 {
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0));
+  assert(battery_is_ok(25, 70, 0.7));
+  assert(!battery_is_ok(50, 85, 0));
   return 0;
 }
