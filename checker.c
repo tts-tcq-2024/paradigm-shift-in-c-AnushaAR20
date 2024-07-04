@@ -1,46 +1,26 @@
 #include <stdio.h>
 #include <assert.h>
 
-typedef struct {
-  float min;
-  float max;
-  float value;
-  const char* parameter;
-} Parameter;
-
-int isInRange(Parameter param) 
+int check_range(float value, float min_value, float max_value, const char* error_message)
 {
-  if (param.value >= param.min && param.value <= param.max) 
-  {
-    printf("%s is in range!\n", param.parameter);
+    if (value < min_value || value > max_value)
+    {
+        printf("%s is out of range\n", error_message);
+        return 0;
+    }
     return 1;
-  } 
-  else 
-  {
-    printf("%s is Out of range!\n", param.parameter);
-    return 0;
-  }
 }
 
-int batteryIsOk(float temp, float soc, float charge) 
+int battery_is_ok(float temperature, float soc, float charge_rate)
 {
-  Parameter params[] = {
-    {0, 45, temp, "Temperature"},
-    {20, 80, soc, "State of charge"},
-    {0, 0.8, charge, "Charge rate"}
-  };
-  
-  for (int i = 0; i < 3; i++) {
-    if (!isInRange(params[i])) {
-      return 0;
-    }
-  }
-  return 1;
+    return (check_range(temperature, 0, 45, "Temperature") &&
+            check_range(soc, 20, 80, "State of Charge") &&
+            check_range(charge_rate, 0, 0.8, "Charge rate"));
 }
 
 int main() 
 {
-   assert(batteryIsOk(25, 70, 0.7));
+  assert(batteryIsOk(25, 70, 0.7));
   assert(!batteryIsOk(50, 85, 0));
   return 0;
 }
