@@ -1,26 +1,79 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
-int check_range(float value, float min_value, float max_value, const char* error_message)
+// Define supported languages
+#define ENGLISH 0
+#define GERMAN 1
+
+int current_language = ENGLISH;
+
+// Message dictionaries
+const char* messages[][3][3] = {
+    // English messages
+    {
+        {"Temperature is out of range", "Warning: Temperature - Approaching low temperature limit", "Warning: Temperature - Approaching high temperature limit"},
+        {"State of Charge is out of range", "Warning: State of Charge - Approaching discharge", "Warning: State of Charge - Approaching charge peak"},
+        {"Charge rate is out of range", "Warning: Charge rate - Approaching low charge rate", "Warning: Charge rate - Approaching high charge rate"}
+    },
+    // German messages
+    {
+        {"Temperatur ist außerhalb des Bereichs", "Warnung: Temperatur - Annäherung an untere Temperaturgrenze", "Warnung: Temperatur - Annäherung an obere Temperaturgrenze"},
+        {"Ladezustand ist außerhalb des Bereichs", "Warnung: Ladezustand - Annäherung an Entladung", "Warnung: Ladezustand - Annäherung an Ladehöhepunkt"},
+        {"Laderate ist außerhalb des Bereichs", "Warnung: Laderate - Annäherung an niedrige Laderate", "Warnung: Laderate - Annäherung an hohe Laderate"}
+    }
+};
+
+enum ParameterType {
+    TEMPERATURE,
+    SOC,
+    CHARGE_RATE
+};
+
+int check_range(float value, float min_value, float max_value, float tolerance, enum ParameterType parameter_type)
 {
     if (value < min_value || value > max_value)
     {
-        printf("%s is out of range\n", error_message);
+        printf("%s\n", messages[current_language][parameter_type][0]);
         return 0;
+    }
+    if (value < min_value + tolerance)
+    {
+        printf("%s\n", messages[current_language][parameter_type][1]);
+    }
+    if (value > max_value - tolerance)
+    {
+        printf("%s\n", messages[current_language][parameter_type][2]);
     }
     return 1;
 }
 
 int battery_is_ok(float temperature, float soc, float charge_rate)
 {
-    return (check_range(temperature, 0, 45, "Temperature") &&
-            check_range(soc, 20, 80, "State of Charge") &&
-            check_range(charge_rate, 0, 0.8, "Charge rate"));
+    float temperature_tolerance = 2.25; // 5% of upper limit 45
+    float soc_tolerance = 4;            // 5% of upper limit 80
+    float charge_rate_tolerance = 0.04; // 5% of upper limit 0.8
+    
+    return (check_range(temperature, 0, 45, temperature_tolerance, TEMPERATURE) &&
+            check_range(soc, 20, 80, soc_tolerance, SOC) &&
+            check_range(charge_rate, 0, 0.8, charge_rate_tolerance, CHARGE_RATE));
 }
 
 int main() 
 {
-  assert(battery_is_ok(25, 70, 0.7));
-  assert(!battery_is_ok(50, 85, 0));
-  return 0;
+    // Test in English
+    current_language = ENGLISH;
+    assert(battery_is_ok(25, 70, 0.7));
+    assert(!battery_is_ok(50, 85, 0));
+    assert(battery_is_ok(22, 76, 0.78)); // To test warning messages
+    assert(battery_is_ok(3, 21, 0.05));  // To test warning messages
+    
+    // Test in German
+    current_language = GERMAN;
+    assert(battery_is_ok(25, 70, 0.7));
+    assert(!battery_is_ok(50, 85, 0));
+    assert(battery_is_ok(22, 76, 0.78)); // To test warning messages
+    assert(battery_is_ok(3, 21, 0.05));  // To test warning messages
+    
+    return 0;
 }
