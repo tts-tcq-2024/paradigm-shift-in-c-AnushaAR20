@@ -30,33 +30,44 @@ enum ParameterType {
     CHARGE_RATE
 };
 
-int check_range(float value, float min_value, float max_value, float tolerance, enum ParameterType parameter_type)
-{
-    if (value < min_value || value > max_value)
-    {
-        printf("%s\n", messages[current_language][parameter_type][0]);
+void print_message(int message_index, enum ParameterType parameter_type) {
+    printf("%s\n", messages[current_language][parameter_type][message_index]);
+}
+
+int is_value_out_of_range(float value, float min_value, float max_value) {
+    return (value < min_value || value > max_value);
+}
+
+int is_value_near_lower_limit(float value, float min_value, float tolerance) {
+    return (value < min_value + tolerance);
+}
+
+int is_value_near_upper_limit(float value, float max_value, float tolerance) {
+    return (value > max_value - tolerance);
+}
+
+int check_parameter(float value, float min_value, float max_value, float tolerance, enum ParameterType parameter_type) {
+    if (is_value_out_of_range(value, min_value, max_value)) {
+        print_message(0, parameter_type);
         return 0;
     }
-    if (value < min_value + tolerance)
-    {
-        printf("%s\n", messages[current_language][parameter_type][1]);
+    if (is_value_near_lower_limit(value, min_value, tolerance)) {
+        print_message(1, parameter_type);
     }
-    if (value > max_value - tolerance)
-    {
-        printf("%s\n", messages[current_language][parameter_type][2]);
+    if (is_value_near_upper_limit(value, max_value, tolerance)) {
+        print_message(2, parameter_type);
     }
     return 1;
 }
 
-int battery_is_ok(float temperature, float soc, float charge_rate)
-{
+int battery_is_ok(float temperature, float soc, float charge_rate) {
     float temperature_tolerance = 2.25; // 5% of upper limit 45
     float soc_tolerance = 4;            // 5% of upper limit 80
     float charge_rate_tolerance = 0.04; // 5% of upper limit 0.8
     
-    return (check_range(temperature, 0, 45, temperature_tolerance, TEMPERATURE) &&
-            check_range(soc, 20, 80, soc_tolerance, SOC) &&
-            check_range(charge_rate, 0, 0.8, charge_rate_tolerance, CHARGE_RATE));
+    return (check_parameter(temperature, 0, 45, temperature_tolerance, TEMPERATURE) &&
+            check_parameter(soc, 20, 80, soc_tolerance, SOC) &&
+            check_parameter(charge_rate, 0, 0.8, charge_rate_tolerance, CHARGE_RATE));
 }
 
 int main() 
