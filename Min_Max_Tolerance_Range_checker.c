@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include "Battery.h"
 
 int is_value_out_of_range(float value, float min_value, float max_value) {
     return (value < min_value || value > max_value);
