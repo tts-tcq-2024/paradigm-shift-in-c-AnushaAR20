@@ -2,6 +2,12 @@
 #include <assert.h>
 #include <string.h>
 #include "Battery.h"
+#include "Check_Battery_Parameters.h"
+#include "Check_battery_IsOK.h"
+#include "Print_message.h"
+#include "Min_Max_Tolerance_Range_checker.h"
+
+
 
 int main() 
 {
