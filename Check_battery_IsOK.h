@@ -1,5 +1,5 @@
 #ifndef CHECK_BATTERY_ISOK_H_
-#def CHECK_BATTERY_ISOK_H_
+#define CHECK_BATTERY_ISOK_H_
 
 #include "Battery.h"
 
