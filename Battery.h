@@ -1,6 +1,10 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+
 // Define supported languages
 #define ENGLISH 0
 #define GERMAN 1
