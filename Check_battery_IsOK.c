@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include "Battery.h"
 #include "Check_battery_IsOK.h"
+#include "Check_Battery_Parameters.h"
 
 int battery_is_ok(float temperature, float soc, float charge_rate) 
 {
