@@ -1,5 +1,5 @@
 #ifndef BATTERY_H
-#def BATTERY_H
+#define BATTERY_H
 
 // Define supported languages
 #define ENGLISH 0
