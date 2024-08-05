@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include "Battery.h"
 #include "Check_Battery_Parameters.h"
+#include "Print_message.h"
+#include "Min_Max_Tolerance_Range_checker.h"
 
 int check_parameter(float value, float min_value, float max_value, float tolerance, enum ParameterType parameter_type) {
     if (is_value_out_of_range(value, min_value, max_value)) {
