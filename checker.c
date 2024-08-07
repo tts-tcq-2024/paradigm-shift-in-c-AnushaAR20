@@ -5,6 +5,7 @@
 #include "Check_battery_IsOK.h"
 #include "Print_message.h"
 #include "Min_Max_Tolerance_Range_checker.h"
+#include "Set_language.h"
 
 void test_battery(float temperature, float soc, float charge_rate, int language) {
     set_language(language);
