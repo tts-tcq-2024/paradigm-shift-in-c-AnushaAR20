@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "battery.h"
+#include "Battery.h"
 
 void test_battery(float temperature, float soc, float charge_rate, int language) {
     set_language(language);
