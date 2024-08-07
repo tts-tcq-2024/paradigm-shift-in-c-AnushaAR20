@@ -6,6 +6,7 @@
 #include "Print_message.h"
 #include "Min_Max_Tolerance_Range_checker.h"
 #include "Set_language.h"
+#include "Battery_Test.h"
 
 
 int main() 
