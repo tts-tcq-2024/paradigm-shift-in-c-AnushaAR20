@@ -9,7 +9,7 @@
 #define ENGLISH 0
 #define GERMAN 1
 
-//int current_language = ENGLISH;
+int current_language = ENGLISH;
 
 // Message dictionaries
 const char* messages[][3][3] = {
