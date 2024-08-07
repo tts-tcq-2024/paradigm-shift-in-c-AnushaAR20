@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include "Battery.h"
 #include "Check_Battery_Parameters.h"
 #include "Check_battery_IsOK.h"
 #include "Print_message.h"
