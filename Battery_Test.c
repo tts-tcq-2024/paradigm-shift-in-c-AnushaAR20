@@ -1,4 +1,7 @@
 #include "Battery_Test.h"
+#include "Check_battery_IsOK.h"
+#include "Print_message.h"
+#include "Set_language.h"
 
 void test_battery(float temperature, float soc, float charge_rate, int language) {
     set_language(language);
