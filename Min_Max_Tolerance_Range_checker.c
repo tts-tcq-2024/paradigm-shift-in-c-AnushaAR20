@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include "Min_Max_Tolerance_Range_checker.h"
 #include "Battery.h"
 
 int is_value_out_of_range(float value, float min_value, float max_value) {
