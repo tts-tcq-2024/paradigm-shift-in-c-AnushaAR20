@@ -1,4 +1,4 @@
-#include "battery.h"
+#include "Battery.h"
 
 // Define global variables
 int current_language = ENGLISH;
